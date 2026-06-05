@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Axis Systems — Enterprise AI Chatbots</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --black: #0A0A0F;
+    --white: #FAFAF8;
+    --accent: #C8FF5F;
+    --gray1: #111118;
+    --gray2: #1A1A24;
+    --gray3: #2A2A38;
+    --gray4: #44445A;
+    --gray5: #8888AA;
+    --gray6: #BBBBCC;
+    --border: rgba(255,255,255,0.08);
+    --border-accent: rgba(200,255,95,0.25);
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, h4 { font-family: 'Syne', sans-serif; }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(200,255,95,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,255,95,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
+  nav {
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(20px);
+    z-index: 100;
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+  .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 22px; letter-spacing: -0.5px; color: var(--white); text-decoration: none; }
+  .logo span { color: var(--accent); }
+  .nav-badge { background: rgba(200,255,95,0.12); border: 1px solid var(--border-accent); color: var(--accent); font-size: 12px; font-weight: 500; padding: 6px 14px; border-radius: 100px; letter-spacing: 0.5px; }
+  .hero { padding: 120px 0 100px; text-align: center; position: relative; }
+  .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(200,255,95,0.08); border: 1px solid var(--border-accent); color: var(--accent); font-size: 13px; font-weight: 500; padding: 7px 16px; border-radius: 100px; margin-bottom: 40px; letter-spacing: 0.3px; }
+  .hero-tag::before { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+  .hero h1 { font-size: clamp(48px, 7vw, 88px); font-weight: 800; line-height: 1.0; letter-spacing: -3px; margin-bottom: 28px; }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero-sub { font-size: 18px; color: var(--gray5); max-width: 540px; margin: 0 auto 56px; font-weight: 300; line-height: 1.7; }
+  .waitlist-form { display: flex; gap: 10px; max-width: 460px; margin: 0 auto 20px; }
+  .waitlist-form input { flex: 1; background: var(--gray2); border: 1px solid var(--border); color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 15px; padding: 14px 18px; border-radius: 10px; outline: none; transition: border-color 0.2s; }
+  .waitlist-form input::placeholder { color: var(--gray4); }
+  .waitlist-form input:focus { border-color: var(--border-accent); }
+  .btn-primary { background: var(--accent); color: var(--black); font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; padding: 14px 24px; border: none; border-radius: 10px; cursor: pointer; white-space: nowrap; letter-spacing: 0.3px; transition: all 0.2s; }
+  .btn-primary:hover { background: #DBFF7A; transform: translateY(-1px); }
+  .form-note { font-size: 13px; color: var(--gray4); }
+  .success-msg { display: none; align-items: center; gap: 10px; background: rgba(200,255,95,0.08); border: 1px solid var(--border-accent); color: var(--accent); font-size: 14px; padding: 14px 20px; border-radius: 10px; max-width: 460px; margin: 0 auto 20px; font-weight: 500; }
+  .waitlist-count { font-size: 13px; color: var(--gray5); margin-top: 12px; }
+  .waitlist-count strong { color: var(--white); }
+  .social-proof { padding: 56px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); text-align: center; }
+  .social-proof p { font-size: 12px; color: var(--gray4); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 28px; font-weight: 500; }
+  .industries-row { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; }
+  .industry-pill { display: flex; align-items: center; gap: 8px; background: var(--gray2); border: 1px solid var(--border); padding: 8px 16px; border-radius: 100px; font-size: 13px; color: var(--gray6); }
+  .industry-pill .dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; opacity: 0.7; }
+  .section-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 16px; }
+  .section-title { font-size: clamp(32px, 4vw, 48px); font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 16px; }
+  .section-sub { color: var(--gray5); font-size: 17px; max-width: 500px; font-weight: 300; }
+  .industries { padding: 100px 0; }
+  .industries-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 56px; }
+  .industry-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .industry-card { background: var(--gray1); border: 1px solid var(--border); border-radius: 16px; padding: 32px; position: relative; overflow: hidden; transition: border-color 0.25s, transform 0.25s; }
+  .industry-card:hover { border-color: var(--border-accent); transform: translateY(-2px); }
+  .industry-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--accent); opacity: 0; transition: opacity 0.25s; }
+  .industry-card:hover::after { opacity: 1; }
+  .card-icon { width: 44px; height: 44px; background: rgba(200,255,95,0.1); border: 1px solid var(--border-accent); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 20px; }
+  .industry-card h3 { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 10px; }
+  .industry-card p { font-size: 14px; color: var(--gray5); line-height: 1.6; margin-bottom: 20px; }
+  .card-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { background: var(--gray3); border: 1px solid var(--border); color: var(--gray6); font-size: 11px; padding: 4px 10px; border-radius: 100px; }
+  .how { padding: 100px 0; border-top: 1px solid var(--border); }
+  .how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-top: 60px; }
+  .steps { display: flex; flex-direction: column; gap: 32px; }
+  .step { display: flex; gap: 20px; align-items: flex-start; }
+  .step-num { width: 36px; height: 36px; background: rgba(200,255,95,0.1); border: 1px solid var(--border-accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px; color: var(--accent); flex-shrink: 0; }
+  .step-content h4 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+  .step-content p { font-size: 14px; color: var(--gray5); line-height: 1.6; }
+  .chat-demo { background: var(--gray1); border: 1px solid var(--border); border-radius: 20px; padding: 24px; }
+  .chat-header { display: flex; align-items: center; gap: 10px; padding-bottom: 20px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+  .chat-avatar { width: 32px; height: 32px; background: linear-gradient(135deg, var(--accent), #78CC00); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 12px; color: var(--black); }
+  .chat-name { font-size: 14px; font-weight: 600; }
+  .chat-status { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; margin-left: auto; }
+  .chat-bubble { padding: 12px 16px; border-radius: 12px; font-size: 13px; line-height: 1.5; margin-bottom: 10px; max-width: 85%; }
+  .chat-bubble.user { background: var(--gray3); color: var(--gray6); margin-left: auto; border-bottom-right-radius: 4px; }
+  .chat-bubble.bot { background: rgba(200,255,95,0.08); border: 1px solid var(--border-accent); color: var(--white); border-bottom-left-radius: 4px; }
+  .chat-lang { display: flex; gap: 6px; margin-top: 16px; flex-wrap: wrap; }
+  .lang-tag { background: var(--gray3); color: var(--gray5); font-size: 10px; padding: 3px 8px; border-radius: 100px; letter-spacing: 0.5px; }
+  .stats { padding: 80px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+  .stat-item { background: var(--gray1); padding: 40px 32px; text-align: center; }
+  .stat-num { font-family: 'Syne', sans-serif; font-size: 44px; font-weight: 800; color: var(--accent); letter-spacing: -2px; line-height: 1; margin-bottom: 8px; }
+  .stat-label { font-size: 13px; color: var(--gray5); }
+  .cta-section { padding: 100px 0; text-align: center; }
+  .cta-box { background: var(--gray1); border: 1px solid var(--border); border-radius: 24px; padding: 80px 60px; position: relative; overflow: hidden; }
+  .cta-box::before { content: ''; position: absolute; top: -1px; left: 50%; transform: translateX(-50%); width: 60%; height: 1px; background: linear-gradient(90deg, transparent, var(--accent), transparent); }
+  .cta-box h2 { font-size: clamp(32px, 4vw, 52px); font-weight: 800; letter-spacing: -2px; margin-bottom: 16px; }
+  .cta-box p { color: var(--gray5); font-size: 17px; max-width: 440px; margin: 0 auto 40px; font-weight: 300; }
+  footer { padding: 40px 0; border-top: 1px solid var(--border); }
+  .footer-inner { display: flex; justify-content: space-between; align-items: center; }
+  .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; }
+  .footer-logo span { color: var(--accent); }
+  footer p { font-size: 13px; color: var(--gray4); }
+  @media (max-width: 768px) {
+    .industry-grid { grid-template-columns: 1fr; }
+    .how-grid { grid-template-columns: 1fr; gap: 40px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .industries-header { flex-direction: column; gap: 16px; }
+    .waitlist-form { flex-direction: column; }
+    .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <div class="nav-inner">
+      <a class="logo" href="#">Axis<span>.</span></a>
+      <div class="nav-badge">Now accepting enterprise clients</div>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-tag">Enterprise AI Chatbots — 7+ Languages</div>
+    <h1>AI that speaks<br>your industry's<br><em>language.</em></h1>
+    <p class="hero-sub">Axis Systems builds multilingual AI chatbots for enterprise. GDPR-compliant, EU-hosted, and deployed in under 30 days.</p>
+    <div class="waitlist-form" id="form-wrapper">
+      <input type="email" id="email-input" placeholder="Enter your work email" />
+      <button class="btn-primary" onclick="joinWaitlist()">Join waitlist</button>
+    </div>
+    <div class="success-msg" id="success-msg">
+      <span>✦</span><span>You're on the list — we'll be in touch shortly.</span>
+    </div>
+    <p class="form-note">No spam. Enterprise demos available on request.</p>
+    <p class="waitlist-count" id="hero-count" style="margin-top:16px;"></p>
+  </div>
+</section>
+
+<section class="social-proof">
+  <div class="container">
+    <p>Built for industries that demand precision</p>
+    <div class="industries-row">
+      <div class="industry-pill"><span class="dot"></span>Healthcare</div>
+      <div class="industry-pill"><span class="dot"></span>Legal</div>
+      <div class="industry-pill"><span class="dot"></span>Real Estate</div>
+      <div class="industry-pill"><span class="dot"></span>Logistics</div>
+      <div class="industry-pill"><span class="dot"></span>Government</div>
+      <div class="industry-pill"><span class="dot"></span>Finance</div>
+    </div>
+  </div>
+</section>
+
+<section class="industries">
+  <div class="container">
+    <div class="industries-header">
+      <div>
+        <p class="section-label">Use cases</p>
+        <h2 class="section-title">Your industry,<br>automated.</h2>
+      </div>
+      <p class="section-sub" style="max-width:320px;">Purpose-built chatbots that understand domain-specific language and compliance requirements.</p>
+    </div>
+    <div class="industry-grid">
+      <div class="industry-card">
+        <div class="card-icon">🏥</div>
+        <h3>Healthcare</h3>
+        <p>Patient intake, appointment scheduling, multilingual triage support, and compliance with medical data regulations.</p>
+        <div class="card-tags"><span class="tag">GDPR</span><span class="tag">HIPAA-ready</span><span class="tag">Arabic / Somali</span></div>
+      </div>
+      <div class="industry-card">
+        <div class="card-icon">⚖️</div>
+        <h3>Legal & Compliance</h3>
+        <p>Client intake, document collection, FAQ automation for law firms and compliance-heavy enterprises.</p>
+        <div class="card-tags"><span class="tag">EU AI Act</span><span class="tag">Case routing</span><span class="tag">7 languages</span></div>
+      </div>
+      <div class="industry-card">
+        <div class="card-icon">🏨</div>
+        <h3>Hospitality & Hotels</h3>
+        <p>Concierge automation, booking support, multilingual guest communication across any property size.</p>
+        <div class="card-tags"><span class="tag">24/7 support</span><span class="tag">PMS integration</span><span class="tag">Multilingual</span></div>
+      </div>
+      <div class="industry-card">
+        <div class="card-icon">🏛️</div>
+        <h3>Government & Public Sector</h3>
+        <p>Citizen services in multiple languages, form guidance, and routing for municipalities and public agencies.</p>
+        <div class="card-tags"><span class="tag">EU-hosted</span><span class="tag">CLOUD Act free</span><span class="tag">Accessibility</span></div>
+      </div>
+      <div class="industry-card">
+        <div class="card-icon">🏦</div>
+        <h3>Financial Services</h3>
+        <p>Customer onboarding, KYC assistance, product FAQ, and escalation routing for banks and fintechs.</p>
+        <div class="card-tags"><span class="tag">Secure infra</span><span class="tag">Audit logs</span><span class="tag">DORA-ready</span></div>
+      </div>
+      <div class="industry-card">
+        <div class="card-icon">📦</div>
+        <h3>Logistics & Supply Chain</h3>
+        <p>Shipment tracking, order status, driver communication, and warehouse FAQ — at any scale.</p>
+        <div class="card-tags"><span class="tag">API-first</span><span class="tag">Real-time data</span><span class="tag">Multilingual</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="how">
+  <div class="container">
+    <p class="section-label">The process</p>
+    <h2 class="section-title">Live in 30 days,<br>not 6 months.</h2>
+    <div class="how-grid">
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-content">
+            <h4>Discovery call & audit</h4>
+            <p>We map your customer touchpoints, language needs, and compliance requirements in a single session.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-content">
+            <h4>Build & train</h4>
+            <p>Your chatbot is built on our enterprise-grade stack with your data, your tone, and your workflows.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-content">
+            <h4>EU-compliant deployment</h4>
+            <p>Hosted on EU infrastructure — zero US data exposure, full GDPR and EU AI Act alignment.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <div class="step-content">
+            <h4>Ongoing support & iteration</h4>
+            <p>Monthly updates, performance reports, and a dedicated point of contact for your team.</p>
+          </div>
+        </div>
+      </div>
+      <div class="chat-demo">
+        <div class="chat-header">
+          <div class="chat-avatar">AS</div>
+          <div>
+            <div class="chat-name">Axis Assistant</div>
+            <div style="font-size:12px;color:var(--gray5);">Healthcare — Patient Portal</div>
+          </div>
+          <div class="chat-status"></div>
+        </div>
+        <div class="chat-bubble user">I need to reschedule my appointment for Thursday</div>
+        <div class="chat-bubble bot">Of course! I can see your appointment on Thursday at 14:00 with Dr. Lindqvist. What day works better for you?</div>
+        <div class="chat-bubble user">أريد الحجز يوم الاثنين إذا أمكن</div>
+        <div class="chat-bubble bot">بالطبع. لدي فتحة يوم الاثنين الساعة 10:30 صباحًا. هل تريد تأكيد الموعد؟</div>
+        <div class="chat-lang">
+          <span class="lang-tag">EN</span><span class="lang-tag">AR</span><span class="lang-tag">SO</span>
+          <span class="lang-tag">SV</span><span class="lang-tag">FR</span><span class="lang-tag">DE</span><span class="lang-tag">ES</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item"><div class="stat-num">7+</div><div class="stat-label">Languages supported</div></div>
+      <div class="stat-item"><div class="stat-num">30d</div><div class="stat-label">Average deployment</div></div>
+      <div class="stat-item"><div class="stat-num">EU</div><div class="stat-label">Data stays in Europe</div></div>
+      <div class="stat-item"><div class="stat-num">24/7</div><div class="stat-label">Always-on support</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-box">
+      <h2>Ready to automate<br>your customer layer?</h2>
+      <p>Join the waitlist and get early access to enterprise pricing and a free discovery session.</p>
+      <div class="waitlist-form" id="cta-form-wrapper" style="justify-content:center;">
+        <input type="email" id="cta-email-input" placeholder="your@company.com" />
+        <button class="btn-primary" onclick="joinWaitlistCTA()">Reserve your spot</button>
+      </div>
+      <div class="success-msg" id="cta-success-msg" style="justify-content:center;">
+        <span>✦</span><span>You're on the list — we'll reach out within 48 hours.</span>
+      </div>
+      <p class="waitlist-count" id="cta-count" style="margin-top:16px;"></p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">Axis<span>.</span></div>
+      <p>© 2025 Axis Systems. EU-hosted. GDPR compliant.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Simple localStorage-based waitlist (works on any static host)
+  const KEY = 'as_waitlist_count';
+
+  function getCount() {
+    return parseInt(localStorage.getItem(KEY) || '0');
+  }
+
+  function setCount(n) {
+    localStorage.setItem(KEY, n);
+  }
+
+  function displayCount() {
+    const n = getCount() + 47;
+    const text = `<strong>${n} companies</strong> already on the waitlist`;
+    document.getElementById('hero-count').innerHTML = text;
+    document.getElementById('cta-count').innerHTML = text;
+  }
+
+  function joinWaitlist() {
+    const input = document.getElementById('email-input');
+    const email = input.value.trim();
+    if (!email || !email.includes('@')) {
+      input.style.borderColor = 'rgba(255,80,80,0.5)';
+      setTimeout(() => input.style.borderColor = '', 1200);
+      return;
+    }
+    setCount(getCount() + 1);
+    document.getElementById('form-wrapper').style.display = 'none';
+    document.getElementById('success-msg').style.display = 'flex';
+    displayCount();
+  }
+
+  function joinWaitlistCTA() {
+    const input = document.getElementById('cta-email-input');
+    const email = input.value.trim();
+    if (!email || !email.includes('@')) {
+      input.style.borderColor = 'rgba(255,80,80,0.5)';
+      setTimeout(() => input.style.borderColor = '', 1200);
+      return;
+    }
+    setCount(getCount() + 1);
+    document.getElementById('cta-form-wrapper').style.display = 'none';
+    document.getElementById('cta-success-msg').style.display = 'flex';
+    displayCount();
+  }
+
+  displayCount();
+</script>
+</body>
+</html>
